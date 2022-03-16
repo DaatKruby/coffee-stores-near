@@ -43,6 +43,7 @@
       
       .cardImage {
         border-radius: 0.75rem /* 12px */;
+        object-fit: cover;
       }
       
       @media (min-width: 1024px) {
