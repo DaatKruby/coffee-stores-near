@@ -2,7 +2,9 @@
     {
       "id": 0,
       "name": "Cafeteria Gioconda",
-      "imgUrl": "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80",
+      "imgUrl": "/static/gioconda_cafe.jpg",
+      "width": 350,
+      "height": 500,
       "websiteUrl": "https://www.strangelovecoffee.ca/",
       "address": "Plaza 5 de mayo, enseguida de gasolinera TARGO",
       "neighbourhood": "Centro, plaza 5 de mayo"
@@ -11,6 +13,8 @@
       "id": 1,
       "name": "Caffenio",
       "imgUrl": "https://images.unsplash.com/photo-1498804103079-a6351b050096?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2468&q=80",
+      "width": 350,
+      "height": 750,
       "websiteUrl": "https://www.darkhorseespresso.com/",
       "address": "401 Richmond St W",
       "neighbourhood": "Richmond and Spadina"
@@ -19,6 +23,8 @@
       "id": 2,
       "name": "Coffee Vita",
       "imgUrl": "https://images.unsplash.com/photo-1498804103079-a6351b050096?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2468&q=80",
+      "width": 350,
+      "height": 750,
       "websiteUrl": "https://www.darkhorseespresso.com/",
       "address": "401 Richmond St W",
       "neighbourhood": "Richmond and Spadina"
@@ -27,6 +33,8 @@
       "id": 300,
       "name": "Los alamos Cafe",
       "imgUrl": "https://images.unsplash.com/photo-1498804103079-a6351b050096?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2468&q=80",
+      "width": 350,
+      "height": 750,
       "websiteUrl": "https://www.darkhorseespresso.com/",
       "address": "401 Richmond St W",
       "neighbourhood": "Route 300 Neighbourhood"
