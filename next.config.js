@@ -3,8 +3,7 @@
 
 module.exports = {
   images: {
-    domains: ['images.unsplash.com'],
+    domains: ['images.unsplash.com', 'via.placeholder.com'],
   },
   reactStrictMode: true,
 }
-
