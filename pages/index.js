@@ -7,25 +7,15 @@ import axios from 'axios';
 import Banner from '../components/banner'
 import Card from '../components/card'
 
-import coffeeStoresData from '../data/coffee-stores.json';
-
-var config = {
-  method: 'get',
-  url: 'apiurl+key',
-  headers: {}
-};
-
-axios(config)
-  .then(function (response) {
-    console.log(JSON.stringify(response.data));
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+import { fetchCoffeeStores } from '../lib/coffee-stores-fetch';
 
 export async function getStaticProps() {
+  const coffeeStoresFetch = await fetchCoffeeStores(27.07028, -109.44372, process.env.API_KEY_MAPS);
+
+  const data = coffeeStoresFetch;
+
   return {
-    props: { coffeeStores: coffeeStoresData },
+    props: { coffeeStores: data },
   }
 }
 
@@ -33,6 +23,8 @@ export default function Home(props) {
   const handleOnBannerBtnClick = () => {
     //button handler
   }
+
+  console.log(props.coffeeStores);
 
   return (
     <div className={styles.container}>
@@ -54,7 +46,7 @@ export default function Home(props) {
             <div className={styles.cardLayout}>
               {props.coffeeStores.map(store => {
                 return (
-                  <Card id={store.id} name={store.name} imgUrl={store.imgUrl} href={`/coffee-store/${store.id}`} className={styles.card} />
+                  <Card id={store.place_id} name={store.name} imgUrl="https://via.placeholder.com/300.png/09f/fff" href={`/coffee-store/${store.place_id}`} className={styles.card} />
                 )
               })}
             </div>
