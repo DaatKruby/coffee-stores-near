@@ -4,27 +4,29 @@ import Head from "next/head";
 import Image from "next/image";
 import cls from 'classNames';
 
-import coffeStoresData from '../../data/coffee-stores.json';
+import { fetchCoffeeStores } from '../../lib/coffee-stores-fetch';
 
 import styles from '../../styles/coffeStore.module.css';
 
-export function getStaticProps(staticProps) {
+export async function getStaticProps(staticProps) {
     const params = staticProps.params;
+    const coffeeStoresFetch = await fetchCoffeeStores(27.07028, -109.44372, process.env.API_KEY_MAPS);
 
     return {
         props: {
-            coffeeStore: coffeStoresData.find(coffeeStore => {
-                return coffeeStore.id.toString() === params.id;
+            coffeeStore: coffeeStoresFetch.find(coffeeStore => {
+                return coffeeStore.place_id.toString() === params.id;
             })
         }
     }
 }
 
-export function getStaticPaths() {
-    const paths = coffeStoresData.map(coffeStore => {
+export async function getStaticPaths() {
+    const coffeeStoresFetch = await fetchCoffeeStores(27.07028, -109.44372, process.env.API_KEY_MAPS);
+    const paths = coffeeStoresFetch.map(coffeStore => {
         return {
             params: {
-                id: coffeStore.id.toString(),
+                id: coffeStore.place_id.toString(),
             }
         }
     })
@@ -46,7 +48,7 @@ export default function CoffeeStore(props) {
 
     if (router.isFallback) { return <div>Loading...</div> }
 
-    const { name, address, neighbourhood, imgUrl, width, height } = props.coffeeStore;
+    const { name, vicinity, neighbourhood, imgUrl, width, height } = props.coffeeStore;
 
     return (
         <div className={styles.layout}>
@@ -65,16 +67,12 @@ export default function CoffeeStore(props) {
                     <div className={styles.nameWrapper}>
                         <h1 className={styles.name}>{name}</h1>
                     </div>
-                    <Image src={imgUrl} width={width} height={height} className={styles.storeImg} alt={name}></Image>
+
                 </div>
                 <div className={cls("glass", styles.col2)}>
                     <div className={styles.iconWrapper}>
                         <Image src="/static/icons/location.svg" width="24" height="24" />
-                        <p className={styles.text}>{address}</p>
-                    </div>
-                    <div className={styles.iconWrapper}>
-                        <Image src="/static/icons/marker.svg" width="24" height="24" />
-                        <p className={styles.text}>{neighbourhood}</p>
+                        <p className={styles.text}>{vicinity}</p>
                     </div>
                     <div className={styles.iconWrapper}>
                         <Image src="/static/icons/star.svg" width="24" height="24" />
