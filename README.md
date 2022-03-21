@@ -2,6 +2,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+must have API_KEY_MAPS = 'your google cloud project api key'
+on your .env.local 
+
+
 First, run the development server:
 
 ```bash
