@@ -14,16 +14,20 @@ export async function getStaticProps() {
 
   const data = coffeeStoresData;
 
-  let url_photos = [];
+  let url_thumbnail_photos = [];
 
   coffeeStoresData.map(store => {
-    url_photos = url_photos, getPlacePhotos(store.photos[0].photo_reference, process.env.API_KEY_MAPS);
+    if (store.photos === undefined) {
+      url_thumbnail_photos = [...url_thumbnail_photos, "https://via.placeholder.com/300.png/09f/fff"];
+    } else {
+      url_thumbnail_photos = [...url_thumbnail_photos, getPlacePhotos(store.photos[0].photo_reference, process.env.API_KEY_MAPS)];
+    }
   });
 
   return {
     props: {
       coffeeStores: data,
-      photos: url_photos,
+      thumbnail_photos: url_thumbnail_photos,
     },
   }
 }
@@ -55,10 +59,9 @@ export default function Home(props) {
           <>
             <h2 className={styles.heading2}>Cafeterias en Navojoa</h2>
             <div className={styles.cardLayout}>
-              {props.coffeeStores.map(store => {
+              {props.coffeeStores.map((store, index) => {
                 return (
-                  //refactor this.
-                  <Card key={store.place_id} name={store.name} imgUrl={getPlacePhotos(store.photos[0].photo_reference, 'api_key')} href={`/coffee-store/${store.place_id}`} className={styles.card} />
+                  <Card key={store.place_id} name={store.name} imgUrl={props.thumbnail_photos[index]} href={`/coffee-store/${store.place_id}`} rating={store.rating} className={styles.card} />
                 )
               })}
             </div>

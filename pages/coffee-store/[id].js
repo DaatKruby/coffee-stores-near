@@ -5,6 +5,7 @@ import Image from "next/image";
 import cls from 'classNames';
 
 import { fetchCoffeeStores } from '../../lib/coffee-stores-fetch';
+import { getPlacePhotos } from '../../lib/photos-api';
 
 import styles from '../../styles/coffeStore.module.css';
 
@@ -12,11 +13,20 @@ export async function getStaticProps(staticProps) {
     const params = staticProps.params;
     const coffeeStoresFetch = await fetchCoffeeStores(27.07028, -109.44372, process.env.API_KEY_MAPS);
 
+    const coffeeStore = coffeeStoresFetch.find(coffeeStore => {
+        return coffeeStore.place_id.toString() === params.id;
+    })
+
+    const imgUrl =
+        coffeeStore.photos !== undefined
+            ? getPlacePhotos(coffeeStore.photos[0].photo_reference, process.env.API_KEY_MAPS)
+            : null;
+
     return {
         props: {
-            coffeeStore: coffeeStoresFetch.find(coffeeStore => {
-                return coffeeStore.place_id.toString() === params.id;
-            })
+            coffeeStore,
+            imgUrl,
+
         }
     }
 }
@@ -48,7 +58,8 @@ export default function CoffeeStore(props) {
 
     if (router.isFallback) { return <div>Loading...</div> }
 
-    const { name, vicinity, neighbourhood, imgUrl, width, height } = props.coffeeStore;
+    const { name, vicinity, rating } = props.coffeeStore;
+    const { imgUrl } = props;
 
     return (
         <div className={styles.layout}>
@@ -67,7 +78,16 @@ export default function CoffeeStore(props) {
                     <div className={styles.nameWrapper}>
                         <h1 className={styles.name}>{name}</h1>
                     </div>
-
+                    <Image
+                        src={
+                            imgUrl ||
+                            "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+                        }
+                        width={600}
+                        height={360}
+                        className={styles.storeImg}
+                        alt={name}
+                    ></Image>
                 </div>
                 <div className={cls("glass", styles.col2)}>
                     <div className={styles.iconWrapper}>
