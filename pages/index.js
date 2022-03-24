@@ -7,6 +7,7 @@ import Card from '../components/card'
 
 import { fetchCoffeeStores } from '../lib/coffee-stores-fetch';
 import { getPlacePhotos } from '../lib/photos-api';
+import useTrackLocation from '../hooks/use-track-location'
 
 export async function getStaticProps() {
   const coffeeStoresData = await fetchCoffeeStores(27.07028, -109.44372, process.env.API_KEY_MAPS);
@@ -15,7 +16,6 @@ export async function getStaticProps() {
 
   let url_photos = [];
 
-  //TODO: save in array all API url photos to it use in card component.
   coffeeStoresData.map(store => {
     url_photos = url_photos, getPlacePhotos(store.photos[0].photo_reference, process.env.API_KEY_MAPS);
   });
@@ -29,8 +29,13 @@ export async function getStaticProps() {
 }
 
 export default function Home(props) {
+
+  const { handleTrackLocation, latLong, locationErrorMessage } = useTrackLocation;
+
+  console.log({ latLong });
+
   const handleOnBannerBtnClick = () => {
-    //button handler
+    handleTrackLocation();
   }
 
   return (
