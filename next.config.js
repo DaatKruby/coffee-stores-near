@@ -6,4 +6,6 @@ module.exports = {
     domains: ['images.unsplash.com', 'via.placeholder.com', 'maps.googleapis.com'],
   },
   reactStrictMode: true,
+
+
 }
