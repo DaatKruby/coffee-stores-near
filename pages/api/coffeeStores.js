@@ -9,12 +9,7 @@ export default async function handler(req, res) {
     let config = {
       method: 'get',
       url:
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?
-        location=${latLong}&
-        radius=15000&
-        type=cafe&
-        keyword=cafe&
-        key=AIzaSyCjJGTpFj9YfUrRsX2mDlniMfCEf9oF_9E`,
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latLong}&radius=15000&type=cafe&keyword=cafe&key=key`,
       headers: {}
     };
 
