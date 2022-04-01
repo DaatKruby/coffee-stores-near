@@ -38,15 +38,14 @@ export default function Home(props) {
   const { handleTrackLocation, latLong, locationErrorMessage, isFindingUser } = useTrackLocation();
 
   const [coffeeStores, setCoffeStores] = useState('');
+  const [urlPhotos, setUrlPhotos] = useState([]);
 
   useEffect(async () => {
     if (latLong) {
-      console.log(latLong);
       try {
-        fetchedCoffeeStores = await fetch(`http://localhost:3000/api/coffeeStores?latLong=${latLong}`)
+      await fetch(`http://localhost:3000/api/coffeeStores?latLong=${latLong}`)
           .then(response => response.json())
           .then(data => {
-            console.log(data);
             setCoffeStores(data);
           })
       } catch (error) {
@@ -54,6 +53,20 @@ export default function Home(props) {
       }
     }
   }, [latLong]);
+
+
+
+  let url_photos = [];
+  if(coffeeStores){
+    coffeeStores.map(store => {
+      if (store.photos === undefined) {
+        url_photos = [...url_photos, "https://via.placeholder.com/300.png/09f/fff"];
+      } else {
+        url_photos = [...url_photos, getPlacePhotos(store.photos[0].photo_reference, process.env.NEXT_PUBLIC_API_KEY_MAPS)];
+      }
+    });
+  }
+console.log({url_photos});
 
   const handleOnBannerBtnClick = () => {
     handleTrackLocation();
@@ -80,7 +93,7 @@ export default function Home(props) {
             <div className={styles.cardLayout}>
               {coffeeStores.map((store, index) => {
                 return (
-                  <Card key={store.place_id} name={store.name} imgUrl={props.thumbnail_photos[index]} href={`/coffee-store/${store.place_id}`} rating={store.rating} className={styles.card} />
+                  <Card key={store.place_id} name={store.name} imgUrl={url_photos[index]} href={`/coffee-store/${store.place_id}`} rating={store.rating} className={styles.card} />
                 )
               })}
             </div>
